@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState, Dispatch } from "react";
+import { api, API_URL } from "../constant";
 
-const API_URL = 'http://127.0.0.1:8888'
 
 interface LoginPageProps {
   setToken: Dispatch<string | null>,
@@ -22,21 +22,17 @@ const LoginPage = ({ setToken }: LoginPageProps) => {
     if (!isLoading) {
       return
     }
-    fetch(`${API_URL}/login`, {
+    api({
+      url: `${API_URL}/login`,
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: `{"username": "${username}", "password": "${password}"}`
     })
-    .then(resp => resp.json())
     .then(resp => {
       if (resp?.error) {
         setError(resp.error?.message ?? 'COULD NOT LOGIN');
       } else {
         setToken(resp?.data?.token || null);
       }
-      console.log('look at me', resp);
     }).finally(() => {
       setIsLoading(false);
     })
