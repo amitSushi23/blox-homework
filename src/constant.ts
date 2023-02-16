@@ -1,4 +1,5 @@
 export const API_URL = 'http://127.0.0.1:8888'
+export const FIVE_MINUTES_IN_MILLISEC = 5 * 60 * 1000;
 
 export type TApiParams = {
   method?: 'GET' | 'POST',
