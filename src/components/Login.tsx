@@ -30,10 +30,13 @@ const LoginPage = ({ setToken }: LoginPageProps) => {
     .then(resp => {
       if (resp?.error) {
         setError(resp.error?.message ?? 'COULD NOT LOGIN');
+        setIsLoading(false);
       } else {
         setToken(resp?.data?.token || null);
       }
-    }).finally(() => {
+    })
+    .catch(() => {
+      setError('SERVER - CLIENT FAILURE')
       setIsLoading(false);
     })
   }, [isLoading]);
